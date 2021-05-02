@@ -9,9 +9,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHolder> {
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
-    private PictureItem[] localDataSet;
+    final private ImageItem[] localDataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -20,8 +20,8 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHold
 
         public ViewHolder(View view) {
             super(view);
-            imageView = (ImageView) view.findViewById(R.id.imageView);
-            textView = (TextView) view.findViewById(R.id.textView);
+            imageView = view.findViewById(R.id.imageView);
+            textView = view.findViewById(R.id.textView);
         }
 
         public ImageView getImageView() {
@@ -34,10 +34,11 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureAdapter.ViewHold
 
     }
 
-    public PictureAdapter(PictureItem[] dataSet) {
+    public ImageAdapter(ImageItem[] dataSet) {
         localDataSet = dataSet;
     }
 
+    @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item

@@ -2,14 +2,14 @@ package ams2.ivanll.photogallery;
 
 import android.graphics.Bitmap;
 
-public class PictureItem {
+public class ImageItem {
 
     Bitmap bitmap;
     String comment;
 
-    public PictureItem() {}
+    public ImageItem() {}
 
-    public PictureItem(Bitmap bitmap, String comment) {
+    public ImageItem(Bitmap bitmap, String comment) {
         this.bitmap = bitmap;
         this.comment = comment;
     }
