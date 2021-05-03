@@ -127,10 +127,8 @@ public class MainActivity extends AppCompatActivity {
                 out = new FileOutputStream(outFile);
                 copyFile(in, out);
                 in.close();
-                in = null;
                 out.flush();
                 out.close();
-                out = null;
             } catch(IOException e) {
                 Log.e("tag", "Failed to copy asset file: " + "example-images" + File.separator + filename, e);
             }
