@@ -1,18 +1,13 @@
 package ams2.ivanll.photogallery;
 
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.text.InputType;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -24,6 +19,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
+        private String name;
         private final ImageView imageView;
         private final TextView textView;
         private final ImageButton editCommentButton;
@@ -47,7 +43,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         EditText editText = customLayout.findViewById(R.id.commentEditText);
-                        textView.setText(editText.getText().toString());
+                        String comment = editText.getText().toString();
+                        textView.setText(comment);
+                        InternalDataAccess.saveComment(v.getContext(), name, comment);
                     }
                 });
 
@@ -55,6 +53,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
                 builder.show();
             });
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName (String name) {
+            this.name = name;
         }
 
         public ImageView getImageView() {
@@ -86,6 +92,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.setName(localDataSet[position].getName());
         holder.getImageView().setImageBitmap(localDataSet[position].getBitmap());
         holder.getTextView().setText(localDataSet[position].getComment());
     }
