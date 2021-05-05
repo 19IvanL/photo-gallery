@@ -42,7 +42,6 @@ public class InternalDataAccess {
 
     /**
      * Returns the images stored in the internal storage and their respective comments.
-     *
      * @return An array of ImageItems.
      */
     public static ImageItem[] getImageItemsFromStorage(Context context) {
@@ -110,7 +109,6 @@ public class InternalDataAccess {
 
     /**
      * Finds the comment of a given image name.
-     *
      * @param context
      * @param imageFileName
      * @return The image's comment, or null if there is no comment.
@@ -148,7 +146,6 @@ public class InternalDataAccess {
 
     /**
      * Saves the comment of a given image name.
-     *
      * @param context
      * @param name
      * @param comment
