@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.Log;
 
 import org.w3c.dom.Document;
@@ -44,7 +45,7 @@ public class InternalDataAccess {
      * Returns the images stored in the internal storage and their respective comments.
      * @return An array of ImageItems.
      */
-    public static ImageItem[] getImageItemsFromStorage(Context context) {
+    public static List<ImageItem> getImageItemsFromStorage(Context context) {
         List<ImageItem> itemList = new ArrayList<ImageItem>();
 
         BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
@@ -55,14 +56,24 @@ public class InternalDataAccess {
             String imagesDir = context.getFilesDir() + File.separator + "images";
             File[] imageList = new File(imagesDir).listFiles();
             for (File imageFile : imageList) {
-                if (imageFile.getName().startsWith("capture")) {
+                if (imageFile.getName().endsWith(".jpg") || imageFile.getName().endsWith(".png")) {
                     bitmap = BitmapFactory.decodeFile(imageFile.getPath(), bitmapOptions);
-                    ImageItem imageItem = new ImageItem(imageFile.getName(), bitmap, InternalDataAccess.findComment(context, imageFile.getName()));
+                    ImageItem imageItem = new ImageItem(imageFile.getName(), bitmap, findComment(context, imageFile.getName()));
                     itemList.add(imageItem);
                 }
             }
 
-            return itemList.toArray(new ImageItem[itemList.size()]);
+            File userImages = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+            File[] photos = userImages.listFiles();
+            if (photos != null) {
+                for (File file : photos) {
+                    bitmap = BitmapFactory.decodeFile(file.getPath(), bitmapOptions);
+                    ImageItem it = new ImageItem(file.getName(), bitmap, findComment(context, file.getName()));
+                    itemList.add(it);
+                }
+            }
+
+            return itemList;
         } catch (Exception e) {
             e.printStackTrace();
         }

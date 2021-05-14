@@ -13,9 +13,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
-    final private ImageItem[] localDataSet;
+    final private List<ImageItem> localDataSet;
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -77,7 +79,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     }
 
-    public ImageAdapter(ImageItem[] dataSet) {
+    public ImageAdapter(List<ImageItem> dataSet) {
         localDataSet = dataSet;
     }
 
@@ -92,14 +94,14 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.setName(localDataSet[position].getName());
-        holder.getImageView().setImageBitmap(localDataSet[position].getBitmap());
-        holder.getTextView().setText(localDataSet[position].getComment());
+        holder.setName(localDataSet.get(position).getName());
+        holder.getImageView().setImageBitmap(localDataSet.get(position).getBitmap());
+        holder.getTextView().setText(localDataSet.get(position).getComment());
     }
 
     @Override
     public int getItemCount() {
-        return localDataSet.length;
+        return localDataSet.size();
     }
 
 }
